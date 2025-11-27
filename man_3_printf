@@ -8,9 +8,7 @@ _printf \- produce output according to a format
 .SH DESCRIPTION
 .B _printf()
 produces output according to a format string and a variable number of
-arguments. It writes to the standard output (file descriptor 1) using
-the system call
-.BR write (2).
+arguments. It writes to the standard output (file descriptor 1).
 
 The
 .I format
@@ -24,10 +22,7 @@ The following conversion specifiers are supported:
 
 .TP
 .B %c
-Print a single character (the argument is obtained as an
-.I int
-and converted to
-.I char ).
+Print a single character.
 
 .TP
 .B %s
@@ -54,7 +49,7 @@ If
 is a null pointer, or if a trailing '%' character occurs at the end of
 the format string with no specifier following it,
 .B _printf()
-returns -1 and no output is produced.
+returns -1.
 
 .SH RETURN VALUE
 On success,
@@ -64,9 +59,5 @@ byte used to end C strings).
 
 On failure, a negative value is returned.
 
-.SH SEE ALSO
-.BR printf (3),
-.BR write (2)
-
 .SH AUTHORS
-Written for the Holberton School printf project by the project authors.
+Written for the Holberton School printf project.
