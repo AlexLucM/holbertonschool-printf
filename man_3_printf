@@ -1,37 +1,158 @@
-.TH _PRINTF 3 "27 November 2025" "Holberton School" "_printf Manual"
+.TH _PRINTF 3 "November 2025" "1.0" "_printf Manual"
+
 .SH NAME
-_printf \- formatted output conversion
+_printf \- print formatted output to standard output
+
 .SH SYNOPSIS
-#include "main.h"
+.B #include "main.h"
 
-int _printf(const char *format, ...);
+.BI "int _printf(const char *format, ...);"
+
 .SH DESCRIPTION
-The _printf() function produces output according to a format string and writes the output to standard output.
+The
+.B _printf()
+function is a custom implementation of the standard C
+.B printf()
+function. It writes characters to the standard output stream under the
+control of a
+.I format
+string. This string specifies how each argument should be converted and
+displayed.
 
-The format string is composed of zero or more ordinary characters and conversion specifications. Ordinary characters are printed unchanged.
+.PP
+The
+.I format
+string is a sequence of ordinary characters and conversion specifications.
+Ordinary characters are written as they appear. A percent sign
+.RB ( % )
+introduces a conversion specification that tells
+.B _printf()
+to fetch the next argument and format it according to the specifier that
+follows.
 
-The conversion specifications are introduced by the character %.
-.SH CONVERSION SPECIFIERS
+.PP
+In this project implementation, the following conversion specifiers are
+supported:
+
 .TP
-%c
-Prints a single character.
+.B %c
+The corresponding argument is taken as an
+.B int
+and printed as a single character.
+
 .TP
-%s
-Prints a string of characters.
+.B %s
+The argument is expected to be a pointer to a NUL-terminated string
+.RB ( char\ * ).
+Characters are printed until the terminating '\\0' is reached. If the
+pointer is
+.B NULL
+the string "(null)" is printed instead.
+
 .TP
-%d
-Prints a decimal integer.
+.B %d
 .TP
-%i
-Prints a decimal integer.
+.B %i
+The argument is read as an
+.B int
+and written in signed decimal notation. A leading minus sign is printed
+for negative values. Edge cases such as the minimum integer value
+are handled correctly.
+
 .TP
-%%
-Prints a percent character.
+.B %%
+Prints a single '%' character. No argument is consumed.
+
 .SH RETURN VALUE
-Upon successful return, _printf() returns the number of characters printed.
+On success,
+.B _printf()
+returns the total number of characters written to standard output.
+The terminating '\\0' used for strings is not counted.
 
-On error, -1 is returned.
+.PP
+If
+.I format
+is
+.B NULL
+or if an internal error occurs while writing output,
+.B _printf()
+returns
+.BR -1 .
+
+.SH EXAMPLES
+Some simple uses of
+.B _printf()
+are shown below:
+
+.nf
+_printf("Hello, C27 cohort!\\n");
+    /* Output: Hello, C27 cohort!    */
+    /* Return value: 21             */
+
+_printf("Char: %c, percent: %%\\n", 'X');
+    /* Output: Char: X, percent: %   */
+
+_printf("Zero as number: %d\\n", 0);
+    /* Output: Zero as number: 0     */
+
+_printf("Negative value: %i\\n", -272025);
+    /* Output: Negative value: -272025 */
+.fi
+
+.SH NOTES
+This student version of
+.B _printf()
+focuses on the basic specifiers
+.BR %c ,
+.BR %s ,
+.BR %d ,
+.BR %i
+and
+.BR %% .
+It does not yet implement width, precision, flags, or length modifiers.
+Specifiers such as
+.BR %u ,
+.BR %o ,
+.BR %x ,
+.BR %X
+and
+.BR %p
+are not handled in the mandatory part of the project.
+
+If an unknown specifier is encountered (for example "%k"), this
+implementation prints the '%' character followed by the unknown letter,
+which may differ from the behaviour of the standard
+.B printf
+function.
+
+Internally,
+.B _printf()
+uses the variadic macros
+.BR va_start (3),
+.BR va_arg (3)
+and
+.BR va_end (3)
+and writes characters using the
+.B write(2)
+system call.
+
 .SH SEE ALSO
-printf(3)
+.BR printf (3),
+.BR write (2),
+.BR va_start (3),
+.BR va_arg (3),
+.BR va_end (3)
+
+.SH BUGS
+This simplified implementation does not perform advanced error handling
+or buffering. Very long output or unusual environments may expose
+limitations compared to the standard C library
+.B printf().
+
+.SH HISTORY
+This project was completed in 2025 as part of the Holberton School
+curriculum to practise C programming, variadic functions and formatted
+output.
+
 .SH AUTHORS
 Guillaume De Chilly, Alex Ouattara
