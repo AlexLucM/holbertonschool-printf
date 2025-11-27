@@ -1,140 +1,115 @@
-.TH _PRINTF 3 "November 2025" "1.0" "_printf Manual"
+.\" Manual page for _printf
+.TH _PRINTF 3 "27 November 2025" "holbertonschool-printf" "Library Functions Manual"
 
 .SH NAME
-_printf \- print formatted output to standard output
+_printf \- produce output according to a format
 
 .SH SYNOPSIS
 .B #include "main.h"
-
-.BI "int _printf(const char *format, ...);"
+.br
+.BI "int _printf(const char *" format ", ...);"
 
 .SH DESCRIPTION
-The
 .B _printf()
-function is a custom implementation of the standard C
-.B printf()
-function. It writes characters to the standard output stream under the
-control of a
-.I format
-string. This string specifies how each argument should be converted and
-displayed.
+produces output according to a format string and a variable number of
+arguments. It writes the result to the standard output (file descriptor 1)
+using the system call
+.BR write (2).
 
 .PP
 The
 .I format
-string is a sequence of ordinary characters and conversion specifications.
-Ordinary characters are written as they appear. A percent sign
-.RB ( % )
-introduces a conversion specification that tells
-.B _printf()
-to fetch the next argument and format it according to the specifier that
-follows.
+string is composed of zero or more ordinary characters and conversion
+specifiers. Ordinary characters are printed as they appear in the string.
 
 .PP
-In this project implementation, the following conversion specifiers are
-supported:
+A conversion specifier starts with the character
+.B %
+followed by a single conversion character which specifies how the
+corresponding argument is converted and printed.
+
+.PP
+The following conversion specifiers are supported:
 
 .TP
 .B %c
-The corresponding argument is taken as an
+Print a single character. The argument is taken as an
 .B int
-and printed as a single character.
+but is converted to
+.B char
+before printing.
 
 .TP
 .B %s
-The argument is expected to be a pointer to a NUL-terminated string
-.RB ( char\ * ).
-Characters are printed until the terminating '\\0' is reached. If the
-pointer is
-.B NULL
-the string "(null)" is printed instead.
+Print a null-terminated C string. The argument must be of type
+.B "char *" .
+Characters are printed until a terminating null byte ('\0') is reached.
+If the argument is
+.BR NULL ,
+the string "(null)" is printed.
 
 .TP
 .B %d
 .TP
 .B %i
-The argument is read as an
+Print a signed decimal integer. The argument is taken as an
 .B int
-and written in signed decimal notation. A leading minus sign is printed
-for negative values. Edge cases such as the minimum integer value
-are handled correctly.
+and converted to its decimal representation. Negative values are printed
+with a leading minus sign.
 
 .TP
 .B %%
-Prints a single '%' character. No argument is consumed.
+Print a literal
+.B %
+character. No argument is consumed.
 
-.SH RETURN VALUE
-On success,
-.B _printf()
-returns the total number of characters written to standard output.
-The terminating '\\0' used for strings is not counted.
+.PP
+If a
+.B %
+character is followed by a character that is not one of the supported
+conversion specifiers above, this implementation prints the
+.B %
+character followed by that unknown character, and both characters are
+counted in the return value.
 
 .PP
 If
 .I format
 is
-.B NULL
-or if an internal error occurs while writing output,
+.BR NULL ,
 .B _printf()
-returns
-.BR -1 .
+returns -1 and no output is produced.
+
+.SH RETURN VALUE
+On success,
+.B _printf()
+returns the total number of characters written to the standard output
+(excluding the terminating null byte used to end C strings).
+
+.PP
+On failure, a negative value is returned.
 
 .SH EXAMPLES
-Some simple uses of
-.B _printf()
-are shown below:
-
+.PP
+Print a simple sentence:
+.PP
 .nf
-_printf("Hello, C27 cohort!\\n");
-    /* Output: Hello, C27 cohort!    */
-    /* Return value: 21             */
-
-_printf("Char: %c, percent: %%\\n", 'X');
-    /* Output: Char: X, percent: %   */
-
-_printf("Zero as number: %d\\n", 0);
-    /* Output: Zero as number: 0     */
-
-_printf("Negative value: %i\\n", -272025);
-    /* Output: Negative value: -272025 */
+_printf("Let's try to printf a simple sentence.\n");
 .fi
 
-.SH NOTES
-This student version of
-.B _printf()
-focuses on the basic specifiers
-.BR %c ,
-.BR %s ,
-.BR %d ,
-.BR %i
-and
-.BR %% .
-It does not yet implement width, precision, flags, or length modifiers.
-Specifiers such as
-.BR %u ,
-.BR %o ,
-.BR %x ,
-.BR %X
-and
-.BR %p
-are not handled in the mandatory part of the project.
+.PP
+Print a character and a percent sign:
+.PP
+.nf
+_printf("Character: %c, percent: %%\n", 'A');
+.fi
 
-If an unknown specifier is encountered (for example "%k"), this
-implementation prints the '%' character followed by the unknown letter,
-which may differ from the behaviour of the standard
-.B printf
-function.
-
-Internally,
-.B _printf()
-uses the variadic macros
-.BR va_start (3),
-.BR va_arg (3)
-and
-.BR va_end (3)
-and writes characters using the
-.B write(2)
-system call.
+.PP
+Print integers:
+.PP
+.nf
+_printf("d: %d, i: %i\n", 1024, -98);
+.fi
 
 .SH SEE ALSO
 .BR printf (3),
@@ -143,16 +118,6 @@ system call.
 .BR va_arg (3),
 .BR va_end (3)
 
-.SH BUGS
-This simplified implementation does not perform advanced error handling
-or buffering. Very long output or unusual environments may expose
-limitations compared to the standard C library
-.B printf().
-
-.SH HISTORY
-This project was completed in 2025 as part of the Holberton School
-curriculum to practise C programming, variadic functions and formatted
-output.
-
 .SH AUTHORS
-Guillaume De Chilly, Alex Ouattara
+Written for the Holberton School printf project by Guillaume De Chilly
+and Alex Ouattara.
