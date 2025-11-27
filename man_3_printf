@@ -6,33 +6,36 @@ _printf \- formatted output conversion
 .br
 .BI "int _printf(const char *" format ", ...);"
 .SH DESCRIPTION
-_printf() produces output according to a format string and a variable number
-of arguments. It writes output to the standard output stream.
+The _printf() function produces output according to a format string and a
+variable number of arguments. Output is written to the standard output.
 
 The format string is composed of ordinary characters and conversion
 specifiers. Ordinary characters are copied unchanged to the output.
-
 A conversion specifier starts with the character % and is followed by one of
-the following characters:
+the supported conversion characters listed below.
+
+The following conversion specifiers are supported:
 .TP
 .B %c
 Print a single character.
 .TP
 .B %s
-Print a NULL-terminated C string.
+Print a NULL-terminated string.
 .TP
 .B %%
-Print a literal % character.
+Print a literal percent sign.
 .TP
 .B %d
 Print a signed decimal integer.
 .TP
 .B %i
-Print a signed decimal integer.
+Print a signed decimal integer (same as %d).
 
 If the format string is NULL or ends with a single %, the function returns -1.
 .SH RETURN VALUE
 On success, _printf() returns the number of characters printed.
 On failure, it returns -1.
+.SH SEE ALSO
+printf(3)
 .SH AUTHORS
-Written by Holberton School students.
+Guillaume De Chilly, Alex Ouattara
