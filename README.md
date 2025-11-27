@@ -1,3 +1,3 @@
-![Screenshot_20251126_222103_Chrome](https://github.com/user-attachments/assets/84415da2-8182-4b5e-a5ee-5492f01e9379)
-![Screenshot_20251126_222020_Chrome](https://github.com/user-attachments/assets/dff55b09-2599-4203-9c76-3ab19e3718e5)
+![Screenshot_20251126_222020_Chrome](https://github.com/user-attachments/assets/af0a9108-5be7-4881-814d-e30c002ae37f)
+![Screenshot_20251126_222103_Chrome](https://github.com/user-attachments/assets/7a3bb454-20fb-4d6c-b87c-8ade03653c64)
 # holbertonschool-printf
